@@ -20,9 +20,9 @@ class ProjectController extends Controller
 
     public function index()
     {
-        $this->dateBegin = date('Y-m-d', strtotime("-1 days"));
-        $this->dateEnd = date('Y-m-d', strtotime("-1 days"));
-        $response = Http::withBasicAuth(config('ant_rank.apikey'), '')->get('https://api.antranks.com/v1/projects?limit=10');
+        $this->dateBegin = date('Y-m-d');
+        $this->dateEnd = date('Y-m-d');
+        $response = Http::withBasicAuth(config('ant_rank.apikey'), '')->get('https://api.antranks.com/v1/projects?limit=1000');
         foreach($response->json()['data'] as $project)
         {
            $this->data[$project['id']] = [
@@ -171,6 +171,6 @@ class ProjectController extends Controller
         $data = collect($this->data);
         $fileName = date('Y-m-d').'-'.uniqid().'-keyReports.xlsx';
         \Excel::store(new ProjectSheetController($data), $fileName,'public');
-        echo \Storage::url($fileName);
+        return \Storage::url($fileName);
     }
 }

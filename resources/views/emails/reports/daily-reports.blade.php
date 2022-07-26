@@ -1,5 +1,5 @@
 @component('mail::message')
-# Introduction
+# AntRank Daily Report
 
 Your AntRank daily report is ready to download now.
 

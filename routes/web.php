@@ -20,7 +20,11 @@ use App\Mail\DailyReports;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects', function(){
+    Artisan::queue('rank:report', [
+        '--queue' => 'default'
+    ]);
+});
 Route::get('/projects/{projectId}/keyphrases', [ProjectController::class, 'getKeyPh']);
 Route::get('/projects/{projectId}/rankings', [ProjectController::class, 'getRanking']);
 Route::get('/test', function(){
