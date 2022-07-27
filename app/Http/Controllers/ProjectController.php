@@ -32,14 +32,14 @@ class ProjectController extends Controller
            ];
         }
         $url = $this->directExport();
-        Mail::to('faizytech.php@gmail.com')->send(new DailyReports($url));
+        Mail::to(config('ant_rank.mail_to'))->cc(explode(',',config('ant_rank.mail_cc')))->send(new DailyReports($url));
         $this->saveInDB();
     }
 
     public function getKeyPhrases($projectId)
     {
         $keyph = '';
-        $response = Http::withBasicAuth(config('ant_rank.apikey'), '')->get('https://api.antranks.com/v1/projects/'.$projectId.'/keyphrases?limit=10');
+        $response = Http::withBasicAuth(config('ant_rank.apikey'), '')->get('https://api.antranks.com/v1/projects/'.$projectId.'/keyphrases?limit=1000');
         foreach($response->json()['data'] as $values){
             $keyph .= implode(',',array_keys($values['keyphrases'])).',';
             foreach($values["keyphrases"] as $key => $keyphrase)

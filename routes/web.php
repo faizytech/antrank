@@ -28,5 +28,6 @@ Route::get('/projects', function(){
 Route::get('/projects/{projectId}/keyphrases', [ProjectController::class, 'getKeyPh']);
 Route::get('/projects/{projectId}/rankings', [ProjectController::class, 'getRanking']);
 Route::get('/test', function(){
-    Mail::to('faizytech.php@gmail.com')->send(new DailyReports("https://www.google.com"));
+    // dd(explode(',',config('ant_rank.mail_cc')));
+    // Mail::to(config('ant_rank.mail_to'))->cc(explode(',',config('ant_rank.mail_cc')))->send(new DailyReports("http://www.google.com"));
 });
